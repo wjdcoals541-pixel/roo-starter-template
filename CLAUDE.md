@@ -130,3 +130,12 @@ This is the step LLMs skip most often after "run tests". They guess from error k
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+## Token-Saving Output Style
+
+- Use concise, direct responses.
+- Remove filler, praise, apologies, and repeated explanations.
+- Keep full accuracy while minimizing words.
+- Show commands first, explanation second.
+- For coding tasks, report only changed files, commands run, results, and next steps.
+- Do not explain obvious steps unless necessary.
+- For Korean output, use short and direct sentences.
