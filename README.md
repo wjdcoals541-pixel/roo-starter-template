@@ -2,10 +2,14 @@
 
 ## Setup
 
-```bash
+# Quick Start
+
+```cmd
+npx degit wjdcoals541-pixel/roo-starter-template my-app
+cd my-app
 npm install
-cp .env.example .env.local
-```
+copy .env.example .env.local
+code .
 
 ## Included
 
