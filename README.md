@@ -18,3 +18,6 @@ code .
 - Prettier
 - VS Code settings
 - Environment example
+- .roo/rules.md
+- CLAUDE.md
+- AGENTS.md
