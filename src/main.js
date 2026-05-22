@@ -4,7 +4,6 @@ import gifsData from './data/gifs.json';
 import { APP_TITLE } from './constants.js';
 import { createModal } from './components/modal.js';
 import { createPackSidebar } from './components/pack-sidebar.js';
-import { createPinGate } from './components/pin-gate.js';
 import { createSearchBox } from './components/search.js';
 import { createStickerGrid } from './components/sticker-grid.js';
 import { getStickersByPack, searchStickers } from './utils/filters.js';
@@ -23,17 +22,7 @@ let sidebar = null;
 let grid = null;
 let modal = null;
 
-const gate = createPinGate({
-  onUnlock: () => {
-    globalThis.queueMicrotask(renderGallery);
-  },
-});
-
-if (gate) {
-  app.replaceChildren(gate);
-} else {
-  renderGallery();
-}
+renderGallery();
 
 function renderGallery() {
   modal = modal ?? createModal();
