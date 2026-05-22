@@ -1,5 +1,7 @@
 {
-  "name": "roo-starter-template",
+  "name": "gif-changgo",
+  "displayName": "GIF창고",
+  "description": "GIF창고",
   "private": true,
   "type": "module",
   "scripts": {

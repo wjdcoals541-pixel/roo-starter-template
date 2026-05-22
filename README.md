@@ -1,4 +1,4 @@
-# gif-sticker-gallery
+# GIF창고
 
 Vanilla JavaScript와 Vite로 만든 GIF 스티커 갤러리입니다. Cloudflare R2에 업로드된 GIF를 불러오고, pack 탐색, 검색, 즐겨찾기, 최근 사용, 자주 사용, 확대보기 모달, 공개 URL 복사를 제공합니다.
 
@@ -30,8 +30,6 @@ Build command: npm run build
 Build output directory: dist
 ```
 
-배포 후 Cloudflare Pages가 생성한 공개 URL로 갤러리에 접속합니다.
-
 ## R2_BASE_URL 설정
 
 GIF 파일은 `R2_BASE_URL + "/" + sticker.file` 규칙으로 로드됩니다.
@@ -43,13 +41,7 @@ export const R2_BASE_URL =
   'https://pub-89e483c547674bcf9a18fa2ecf3468c7.r2.dev';
 ```
 
-현재 GIF는 R2 bucket 루트에 있으므로 `sticker.file`은 `001.gif`, `002.gif` 같은 상대 경로만 사용합니다. 예를 들어 첫 번째 GIF의 실제 공개 URL은 아래 구조입니다.
-
-```text
-https://pub-89e483c547674bcf9a18fa2ecf3468c7.r2.dev/001.gif
-```
-
-`R2_BASE_URL` 끝에는 마지막 슬래시를 넣지 않습니다.
+현재 GIF는 R2 bucket 루트에 있으므로 `sticker.file`은 `001.gif`, `002.gif` 같은 상대 경로만 사용합니다. `R2_BASE_URL` 끝에는 마지막 슬래시를 넣지 않습니다.
 
 ## PIN_HASH 설정
 
@@ -59,33 +51,18 @@ PIN 게이트는 입력값의 SHA-256 해시를 [src/constants.js](src/constants
 
 ```js
 export const PIN_HASH =
-  '3255112a569da56a9b616101e6c51f1b26ab26c0492614ff3f85e169453526f1';
+  '2fb451f9569989e892ced96048464d6739285a0a5fe00a1a12c47e9d3af93762';
 ```
 
 PIN 게이트는 강한 인증 수단이 아니라 캐주얼 접근 제한용입니다.
 
 ## 현재 pack 데이터
 
-현재 갤러리 pack입니다.
-
 ```text
 pack id: arca-e-001
 pack name: 구구가가
 emoji: 💬
 files: 001.gif ~ 124.gif
-```
-
-각 sticker는 아래 규칙을 따릅니다.
-
-```json
-{
-  "id": "arca-e-001-001",
-  "pack": "arca-e-001",
-  "name": "001",
-  "title": "001",
-  "file": "001.gif",
-  "tags": ["arca", "gif"]
-}
 ```
 
 ## 관리 명령
