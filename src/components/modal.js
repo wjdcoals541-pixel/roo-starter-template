@@ -43,9 +43,6 @@ export function createModal() {
   image.className = 'modal__image';
   image.loading = 'lazy';
 
-  const tags = documentRef.createElement('div');
-  tags.className = 'modal__tags';
-
   const footer = documentRef.createElement('footer');
   footer.className = 'modal__footer';
 
@@ -55,7 +52,7 @@ export function createModal() {
   copyButton.textContent = 'URL 복사';
 
   header.append(title, closeButton);
-  body.append(image, tags);
+  body.append(image);
   footer.append(copyButton);
   modal.append(header, body, footer);
   backdrop.append(modal);
@@ -66,8 +63,6 @@ export function createModal() {
     title.textContent = sticker?.name ?? '';
     image.src = currentUrl;
     image.alt = sticker?.name ?? '';
-    renderTags(sticker?.tags);
-
     if (backdrop.hidden) {
       previousOverflow = documentRef.body.style.overflow ?? '';
       documentRef.body.style.overflow = 'hidden';
@@ -85,21 +80,6 @@ export function createModal() {
     image.removeAttribute('src');
     documentRef.body.style.overflow = previousOverflow;
     documentRef.removeEventListener('keydown', handleKeydown);
-  }
-
-  function renderTags(tagValues) {
-    tags.replaceChildren();
-
-    if (!Array.isArray(tagValues)) {
-      return;
-    }
-
-    for (const tag of tagValues) {
-      const tagItem = documentRef.createElement('span');
-      tagItem.className = 'sticker-card__tag';
-      tagItem.textContent = tag;
-      tags.append(tagItem);
-    }
   }
 
   function handleKeydown(event) {

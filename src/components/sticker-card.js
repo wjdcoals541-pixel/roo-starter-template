@@ -41,8 +41,6 @@ export function createStickerCard(sticker, options = {}) {
   title.className = 'sticker-card__title';
   title.textContent = sticker.name;
 
-  const tags = createTags(documentRef, sticker.tags);
-
   const actions = documentRef.createElement('div');
   actions.className = 'sticker-card__actions';
 
@@ -58,7 +56,7 @@ export function createStickerCard(sticker, options = {}) {
   updateFavoriteButton(favoriteButton, sticker.id);
 
   mediaButton.append(image);
-  content.append(title, tags);
+  content.append(title);
   actions.append(copyButton, favoriteButton);
   body.append(content, actions);
   card.append(mediaButton, body);
@@ -93,24 +91,6 @@ function createGifUrl(file) {
   const baseUrl = R2_BASE_URL.replace(/\/$/, '');
   const filePath = String(file ?? '').replace(/^\//, '');
   return `${baseUrl}/${filePath}`;
-}
-
-function createTags(documentRef, tags) {
-  const tagList = documentRef.createElement('div');
-  tagList.className = 'sticker-card__tags';
-
-  if (!Array.isArray(tags) || tags.length === 0) {
-    return tagList;
-  }
-
-  for (const tag of tags) {
-    const tagItem = documentRef.createElement('span');
-    tagItem.className = 'sticker-card__tag';
-    tagItem.textContent = tag;
-    tagList.append(tagItem);
-  }
-
-  return tagList;
 }
 
 function updateFavoriteButton(button, stickerId) {
