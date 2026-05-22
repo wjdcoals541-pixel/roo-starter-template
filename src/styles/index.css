@@ -1,3 +1,52 @@
+@import './layout.css';
+@import './pack-tab.css';
+@import './card.css';
+@import './modal.css';
+@import './toast.css';
+@import './gate.css';
+
+:root {
+  color-scheme: light;
+  --color-bg: #f7f8fb;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef2f7;
+  --color-border: #d9e0ea;
+  --color-text: #172033;
+  --color-text-muted: #657089;
+  --color-primary: #2563eb;
+  --color-primary-strong: #1d4ed8;
+  --color-primary-soft: #dbeafe;
+  --color-danger: #dc2626;
+  --color-success: #15803d;
+  --color-overlay: rgb(15 23 42 / 56%);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 8%);
+  --shadow-md: 0 12px 28px rgb(15 23 42 / 12%);
+  --shadow-lg: 0 24px 60px rgb(15 23 42 / 18%);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  --sidebar-width: 248px;
+  --content-max-width: 1280px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family:
@@ -6,10 +55,19 @@ body {
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 #app {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
