@@ -60,9 +60,10 @@ export function createModal() {
 
   function open(sticker) {
     currentUrl = createGifUrl(sticker?.file);
-    title.textContent = sticker?.name ?? '';
+    const stickerLabel = getStickerLabel(sticker);
+    title.textContent = stickerLabel;
     image.src = currentUrl;
-    image.alt = sticker?.name ?? '';
+    image.alt = stickerLabel;
     if (backdrop.hidden) {
       previousOverflow = documentRef.body.style.overflow ?? '';
       documentRef.body.style.overflow = 'hidden';
@@ -117,4 +118,8 @@ function createGifUrl(file) {
   const baseUrl = R2_BASE_URL.replace(/\/$/, '');
   const filePath = String(file ?? '').replace(/^\//, '');
   return `${baseUrl}/${filePath}`;
+}
+
+function getStickerLabel(sticker) {
+  return sticker?.title ?? sticker?.name ?? sticker?.id ?? '';
 }

@@ -17,18 +17,19 @@ export function createStickerCard(sticker, options = {}) {
   }
 
   const gifUrl = createGifUrl(sticker.file);
+  const stickerLabel = getStickerLabel(sticker);
   const card = documentRef.createElement('article');
   card.className = 'sticker-card';
 
   const mediaButton = documentRef.createElement('button');
   mediaButton.className = 'sticker-card__media';
   mediaButton.type = 'button';
-  mediaButton.setAttribute('aria-label', `${sticker.name} 미리보기`);
+  mediaButton.setAttribute('aria-label', `${stickerLabel} 미리보기`);
 
   const image = documentRef.createElement('img');
   image.className = 'sticker-card__image';
   image.src = gifUrl;
-  image.alt = sticker.name;
+  image.alt = stickerLabel;
   image.loading = 'lazy';
 
   const body = documentRef.createElement('div');
@@ -39,7 +40,7 @@ export function createStickerCard(sticker, options = {}) {
 
   const title = documentRef.createElement('h3');
   title.className = 'sticker-card__title';
-  title.textContent = sticker.name;
+  title.textContent = stickerLabel;
 
   const actions = documentRef.createElement('div');
   actions.className = 'sticker-card__actions';
@@ -91,6 +92,10 @@ function createGifUrl(file) {
   const baseUrl = R2_BASE_URL.replace(/\/$/, '');
   const filePath = String(file ?? '').replace(/^\//, '');
   return `${baseUrl}/${filePath}`;
+}
+
+function getStickerLabel(sticker) {
+  return sticker?.title ?? sticker?.name ?? sticker?.id ?? '';
 }
 
 function updateFavoriteButton(button, stickerId) {

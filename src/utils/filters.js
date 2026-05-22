@@ -1,5 +1,8 @@
 // 스티커 목록을 필터링하고 정렬하는 순수 유틸 함수 모음이다.
-const normalizeText = (value) => String(value ?? '').trim().toLowerCase();
+const normalizeText = (value) =>
+  String(value ?? '')
+    .trim()
+    .toLowerCase();
 
 export function getStickersByPack(stickers, packId) {
   if (!Array.isArray(stickers) || !packId) {
@@ -23,6 +26,7 @@ export function searchStickers(stickers, query) {
   return stickers.filter((sticker) => {
     const searchableText = [
       sticker.id,
+      sticker.title,
       sticker.name,
       sticker.pack,
       ...(Array.isArray(sticker.tags) ? sticker.tags : []),
@@ -66,7 +70,9 @@ export function sortStickers(stickers, mode = 'name') {
   switch (mode) {
     case 'name-desc':
       return sortedStickers.sort((a, b) =>
-        normalizeText(b.name).localeCompare(normalizeText(a.name))
+        normalizeText(getStickerLabel(b)).localeCompare(
+          normalizeText(getStickerLabel(a))
+        )
       );
     case 'newest':
       return sortedStickers.sort(
@@ -77,12 +83,20 @@ export function sortStickers(stickers, mode = 'name') {
         (a, b) => Date.parse(a.createdAt ?? 0) - Date.parse(b.createdAt ?? 0)
       );
     case 'popular':
-      return sortedStickers.sort((a, b) => (b.frequency ?? 0) - (a.frequency ?? 0));
+      return sortedStickers.sort(
+        (a, b) => (b.frequency ?? 0) - (a.frequency ?? 0)
+      );
     case 'name':
     case 'name-asc':
     default:
       return sortedStickers.sort((a, b) =>
-        normalizeText(a.name).localeCompare(normalizeText(b.name))
+        normalizeText(getStickerLabel(a)).localeCompare(
+          normalizeText(getStickerLabel(b))
+        )
       );
   }
+}
+
+function getStickerLabel(sticker) {
+  return sticker?.title ?? sticker?.name ?? sticker?.id ?? '';
 }
