@@ -6,6 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "add-pack": "node scripts/add-pack.js",
+    "check-urls": "node scripts/check-urls.js",
+    "find-duplicates": "node scripts/find-duplicates.js",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
