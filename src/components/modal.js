@@ -117,7 +117,7 @@ export function createModal() {
 function createGifUrl(file) {
   const baseUrl = R2_BASE_URL.replace(/\/$/, '');
   const filePath = String(file ?? '').replace(/^\//, '');
-  return `${baseUrl}/${filePath}`;
+  return globalThis.encodeURI(`${baseUrl}/${filePath}`);
 }
 
 function getStickerLabel(sticker) {

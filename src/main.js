@@ -4,6 +4,7 @@ import gifsData from './data/gifs.json';
 import { APP_TITLE } from './constants.js';
 import { createModal } from './components/modal.js';
 import { createPackSidebar } from './components/pack-sidebar.js';
+import { createPinGate } from './components/pin-gate.js';
 import { createSearchBox } from './components/search.js';
 import { createStickerGrid } from './components/sticker-grid.js';
 import { getStickersByPack, searchStickers } from './utils/filters.js';
@@ -11,19 +12,79 @@ import { getFavorites, getFrequency, getRecent } from './utils/storage.js';
 
 const documentRef = globalThis.document;
 const app = documentRef.querySelector('#app');
-const packs = Array.isArray(gifsData.packs) ? gifsData.packs : [];
-const stickers = Array.isArray(gifsData.stickers) ? gifsData.stickers : [];
-const stickerById = new Map(stickers.map((sticker) => [sticker.id, sticker]));
-const defaultPackId = getDefaultPackId(packs);
-const sidebarPacks = prioritizePack(packs, defaultPackId);
 
-let selectedPackId = defaultPackId;
+let packs = [];
+let stickers = [];
+let stickerById = new Map();
+let sidebarPacks = [];
+let selectedPackId = 'favorites';
 let searchQuery = '';
 let sidebar = null;
 let grid = null;
 let modal = null;
 
-renderGallery();
+initializeApp();
+
+async function initializeApp() {
+  renderLoading();
+  setGalleryData(await loadGalleryData());
+  renderPinGate();
+}
+
+function renderLoading() {
+  const loading = documentRef.createElement('div');
+  loading.className = 'gate';
+  loading.textContent = 'GIF창고를 여는 중입니다.';
+  app.replaceChildren(loading);
+}
+
+async function loadGalleryData() {
+  try {
+    const response = await globalThis.fetch('/api/packs', {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GET /api/packs failed with ${response.status}`);
+    }
+
+    return normalizeGalleryData(await response.json());
+  } catch (error) {
+    globalThis.console.warn('Failed to load /api/packs. Falling back to gifs.json.', error);
+    return normalizeGalleryData(gifsData);
+  }
+}
+
+function normalizeGalleryData(data) {
+  return {
+    packs: Array.isArray(data?.packs) ? data.packs : [],
+    stickers: Array.isArray(data?.stickers) ? data.stickers : [],
+  };
+}
+
+function setGalleryData(data) {
+  packs = data.packs;
+  stickers = data.stickers;
+  stickerById = new Map(stickers.map((sticker) => [sticker.id, sticker]));
+  selectedPackId = getDefaultPackId(packs);
+  sidebarPacks = prioritizePack(packs, selectedPackId);
+}
+
+function renderPinGate() {
+  const gate = createPinGate({
+    onUnlock: () => {
+      globalThis.queueMicrotask(renderGallery);
+    },
+  });
+
+  if (gate) {
+    app.replaceChildren(gate);
+  } else {
+    renderGallery();
+  }
+}
 
 function renderGallery() {
   modal = modal ?? createModal();
@@ -156,8 +217,8 @@ function getSelectedTitle(packId) {
 }
 
 function getDefaultPackId(packs) {
-  return packs.some((pack) => pack.id === 'lumicon')
-    ? 'lumicon'
+  return packs.some((pack) => pack.id === '루미콘')
+    ? '루미콘'
     : (packs[0]?.id ?? 'favorites');
 }
 
