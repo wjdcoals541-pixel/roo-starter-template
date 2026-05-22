@@ -8,6 +8,10 @@
   background: var(--color-overlay);
 }
 
+.modal-backdrop[hidden] {
+  display: none;
+}
+
 .modal {
   width: min(100%, 520px);
   border-radius: var(--radius-lg);
