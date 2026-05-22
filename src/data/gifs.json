@@ -1,0 +1,93 @@
+{
+  "packs": [
+    {
+      "id": "daily-reactions",
+      "name": "Daily Reactions",
+      "description": "Everyday reaction stickers"
+    },
+    {
+      "id": "cozy-moods",
+      "name": "Cozy Moods",
+      "description": "Soft and relaxed mood stickers"
+    },
+    {
+      "id": "work-signals",
+      "name": "Work Signals",
+      "description": "Quick workplace status stickers"
+    }
+  ],
+  "stickers": [
+    {
+      "id": "daily-reactions-thumbs-up",
+      "pack": "daily-reactions",
+      "name": "Thumbs Up",
+      "file": "daily-reactions/thumbs-up.gif"
+    },
+    {
+      "id": "daily-reactions-lol",
+      "pack": "daily-reactions",
+      "name": "LOL",
+      "file": "daily-reactions/lol.gif"
+    },
+    {
+      "id": "daily-reactions-wow",
+      "pack": "daily-reactions",
+      "name": "Wow",
+      "file": "daily-reactions/wow.gif"
+    },
+    {
+      "id": "daily-reactions-sad",
+      "pack": "daily-reactions",
+      "name": "Sad",
+      "file": "daily-reactions/sad.gif"
+    },
+    {
+      "id": "cozy-moods-sleepy",
+      "pack": "cozy-moods",
+      "name": "Sleepy",
+      "file": "cozy-moods/sleepy.gif"
+    },
+    {
+      "id": "cozy-moods-reading",
+      "pack": "cozy-moods",
+      "name": "Reading",
+      "file": "cozy-moods/reading.gif"
+    },
+    {
+      "id": "cozy-moods-tea",
+      "pack": "cozy-moods",
+      "name": "Tea Time",
+      "file": "cozy-moods/tea-time.gif"
+    },
+    {
+      "id": "cozy-moods-rain",
+      "pack": "cozy-moods",
+      "name": "Rain",
+      "file": "cozy-moods/rain.gif"
+    },
+    {
+      "id": "work-signals-focus",
+      "pack": "work-signals",
+      "name": "Focus",
+      "file": "work-signals/focus.gif"
+    },
+    {
+      "id": "work-signals-review",
+      "pack": "work-signals",
+      "name": "Review",
+      "file": "work-signals/review.gif"
+    },
+    {
+      "id": "work-signals-done",
+      "pack": "work-signals",
+      "name": "Done",
+      "file": "work-signals/done.gif"
+    },
+    {
+      "id": "work-signals-blocked",
+      "pack": "work-signals",
+      "name": "Blocked",
+      "file": "work-signals/blocked.gif"
+    }
+  ]
+}
