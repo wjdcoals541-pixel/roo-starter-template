@@ -30,6 +30,15 @@ Build command: npm run build
 Build output directory: dist
 ```
 
+### R2 binding
+
+Cloudflare Pages Functions에서 `/api/packs`가 R2 버킷을 읽을 수 있도록 Pages 프로젝트 설정에 R2 binding을 추가합니다.
+
+```text
+Binding name: GIF_BUCKET
+Bucket: gif-sticker-gallery
+```
+
 ## R2_BASE_URL 설정
 
 GIF/WebP 파일은 `R2_BASE_URL + "/" + sticker.file` 규칙으로 로드됩니다.
