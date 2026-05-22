@@ -11,6 +11,11 @@ import { getFavorites, getFrequency, getRecent } from './utils/storage.js';
 
 const documentRef = globalThis.document;
 const app = documentRef.querySelector('#app');
+const LEGACY_PACK_NAME = '구구가가';
+const collator = new globalThis.Intl.Collator('ko-KR', {
+  numeric: true,
+  sensitivity: 'base',
+});
 
 let packs = [];
 let stickers = [];
@@ -58,8 +63,8 @@ async function loadGalleryData() {
 
 function normalizeGalleryData(data) {
   return {
-    packs: Array.isArray(data?.packs) ? data.packs : [],
-    stickers: Array.isArray(data?.stickers) ? data.stickers : [],
+    packs: sortPacks(Array.isArray(data?.packs) ? data.packs : []),
+    stickers: sortStickersByFile(Array.isArray(data?.stickers) ? data.stickers : []),
   };
 }
 
@@ -187,33 +192,73 @@ function getSelectedStickers(packId) {
 
 function getSelectedTitle(packId) {
   if (packId === 'favorites') {
-    return 'Favorites';
+    return '즐겨찾기';
   }
 
   if (packId === 'recent') {
-    return 'Recent';
+    return '최근사용';
   }
 
   if (packId === 'frequent') {
-    return 'Frequent';
+    return '자주씀';
   }
 
   return packs.find((pack) => pack.id === packId)?.name ?? APP_TITLE;
 }
 
 function getDefaultPackId(packs) {
-  return packs.some((pack) => pack.id === '루미콘')
-    ? '루미콘'
-    : (packs[0]?.id ?? 'favorites');
-}
-
-function prioritizePack(packs, packId) {
-  if (!packId) {
-    return packs;
+  if (getFavorites().length > 0) {
+    return 'favorites';
   }
 
-  return [
-    ...packs.filter((pack) => pack.id === packId),
-    ...packs.filter((pack) => pack.id !== packId),
-  ];
+  return (
+    packs.find((pack) => pack.id === LEGACY_PACK_NAME || pack.name === LEGACY_PACK_NAME)
+      ?.id ??
+    packs[0]?.id ??
+    'favorites'
+  );
+}
+
+function prioritizePack(packs) {
+  return sortPacks(packs);
+}
+
+function sortPacks(packs) {
+  return [...packs].sort(comparePacks);
+}
+
+function comparePacks(a, b) {
+  const aIsLegacy = a.id === LEGACY_PACK_NAME || a.name === LEGACY_PACK_NAME;
+  const bIsLegacy = b.id === LEGACY_PACK_NAME || b.name === LEGACY_PACK_NAME;
+
+  if (aIsLegacy && !bIsLegacy) {
+    return -1;
+  }
+
+  if (bIsLegacy && !aIsLegacy) {
+    return 1;
+  }
+
+  return collator.compare(a.name ?? a.id ?? '', b.name ?? b.id ?? '');
+}
+
+function sortStickersByFile(stickers) {
+  return [...stickers].sort(compareStickersByFile);
+}
+
+function compareStickersByFile(a, b) {
+  const packCompare = comparePacks(
+    { id: a.pack, name: a.pack },
+    { id: b.pack, name: b.pack }
+  );
+
+  if (packCompare !== 0) {
+    return packCompare;
+  }
+
+  return collator.compare(getFileName(a.file), getFileName(b.file));
+}
+
+function getFileName(file) {
+  return String(file ?? '').split('/').at(-1) ?? '';
 }

@@ -1,8 +1,8 @@
 // 스티커 묶음 선택 사이드바를 생성하는 컴포넌트다.
 const DEFAULT_TABS = [
-  { id: 'favorites', name: 'Favorites' },
-  { id: 'recent', name: 'Recent' },
-  { id: 'frequent', name: 'Frequent' },
+  { id: 'favorites', name: '즐겨찾기' },
+  { id: 'recent', name: '최근사용' },
+  { id: 'frequent', name: '자주씀' },
 ];
 
 export function createPackSidebar(options = {}) {
