@@ -41,7 +41,7 @@ export const R2_BASE_URL =
   'https://pub-89e483c547674bcf9a18fa2ecf3468c7.r2.dev';
 ```
 
-현재 파일은 R2 bucket의 상대 경로로 관리합니다. `sticker.file`은 `001.gif`, `arca-51385/001.webp` 같은 상대 경로만 사용합니다. `R2_BASE_URL` 끝에는 마지막 슬래시를 넣지 않습니다.
+현재 파일은 R2 bucket의 상대 경로로 관리합니다. `sticker.file`은 `001.gif`, `lumicon/001.webp` 같은 상대 경로만 사용합니다. `R2_BASE_URL` 끝에는 마지막 슬래시를 넣지 않습니다.
 
 ## PIN_HASH 설정
 
@@ -64,10 +64,10 @@ pack name: 구구가가
 emoji: 💬
 files: 001.gif ~ 124.gif
 
-pack id: arca-51385
-pack name: arca 51385
+pack id: lumicon
+pack name: 루미콘
 emoji: 💬
-files: arca-51385/001.webp ~ arca-51385/093.webp
+files: lumicon/001.webp ~ lumicon/093.webp
 ```
 
 ## 관리 명령

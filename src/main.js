@@ -14,7 +14,8 @@ const app = documentRef.querySelector('#app');
 const packs = Array.isArray(gifsData.packs) ? gifsData.packs : [];
 const stickers = Array.isArray(gifsData.stickers) ? gifsData.stickers : [];
 const stickerById = new Map(stickers.map((sticker) => [sticker.id, sticker]));
-const defaultPackId = packs[0]?.id ?? 'favorites';
+const defaultPackId = getDefaultPackId(packs);
+const sidebarPacks = prioritizePack(packs, defaultPackId);
 
 let selectedPackId = defaultPackId;
 let searchQuery = '';
@@ -55,7 +56,7 @@ function createAppShell() {
   });
 
   sidebar = createPackSidebar({
-    packs,
+    packs: sidebarPacks,
     selectedPackId,
     onSelect: (packId) => {
       selectedPackId = packId;
@@ -152,4 +153,21 @@ function getSelectedTitle(packId) {
   }
 
   return packs.find((pack) => pack.id === packId)?.name ?? APP_TITLE;
+}
+
+function getDefaultPackId(packs) {
+  return packs.some((pack) => pack.id === 'lumicon')
+    ? 'lumicon'
+    : (packs[0]?.id ?? 'favorites');
+}
+
+function prioritizePack(packs, packId) {
+  if (!packId) {
+    return packs;
+  }
+
+  return [
+    ...packs.filter((pack) => pack.id === packId),
+    ...packs.filter((pack) => pack.id !== packId),
+  ];
 }
