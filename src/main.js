@@ -4,7 +4,6 @@ import gifsData from './data/gifs.json';
 import { APP_TITLE } from './constants.js';
 import { createModal } from './components/modal.js';
 import { createPackSidebar } from './components/pack-sidebar.js';
-import { createPinGate } from './components/pin-gate.js';
 import { createSearchBox } from './components/search.js';
 import { createStickerGrid } from './components/sticker-grid.js';
 import { getStickersByPack, searchStickers } from './utils/filters.js';
@@ -28,7 +27,7 @@ initializeApp();
 async function initializeApp() {
   renderLoading();
   setGalleryData(await loadGalleryData());
-  renderPinGate();
+  renderGallery();
 }
 
 function renderLoading() {
@@ -70,20 +69,6 @@ function setGalleryData(data) {
   stickerById = new Map(stickers.map((sticker) => [sticker.id, sticker]));
   selectedPackId = getDefaultPackId(packs);
   sidebarPacks = prioritizePack(packs, selectedPackId);
-}
-
-function renderPinGate() {
-  const gate = createPinGate({
-    onUnlock: () => {
-      globalThis.queueMicrotask(renderGallery);
-    },
-  });
-
-  if (gate) {
-    app.replaceChildren(gate);
-  } else {
-    renderGallery();
-  }
 }
 
 function renderGallery() {
